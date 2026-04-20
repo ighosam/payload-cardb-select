@@ -48,11 +48,3 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-
-# exlude dev directory for testing
-/dev
-
-# exclude dist
-/dist
-test.http
-cardb*.db
