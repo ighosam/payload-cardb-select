@@ -5,6 +5,7 @@ import { loadEntity } from '../loder/loadEntity'
 import { loadCollection } from '../loder/loadCollection'
 import { getCollectionSlug } from '../utilities/getCollectionSlug'
 import { mapDrive } from '../utilities/mapDrive'
+import { id } from 'payload/i18n/id'
 
 export async function syncEntityBatches({
   payload,
@@ -121,10 +122,11 @@ export async function syncEntityBatches({
 //////////////////////////////
 /////////////////////////////
 
-    let normalized = nomalizer(adapted.name)
 
-    if(entityType === 'powertrain')
-    console.warn(`normalized name is ${normalized}`)
+
+    //let normalized = nomalizer(adapted.name)
+       let normalized = adapted.name
+   
 /*
     if(entityType === 'trim'){
        if(adapted.name === '' || adapted.name === null){
@@ -132,7 +134,10 @@ export async function syncEntityBatches({
        }else normalized = mapDrive(adapted.name)
     }
 */
+
     const slug = slugify(normalized)?.trim()
+     //const slug = slugify(normalized)
+  
 
     if (!slug) {
       payload.logger.warn(
@@ -146,14 +151,15 @@ export async function syncEntityBatches({
     relKey.push(entityKeyForm)
 
     const identityKey = relKey.join('-')
-    let internal = keyMap.get(identityKey)
+    let intRec =  entityMap.get(adapted.externalId)
+    //let internal = keyMap.get(identityKey)
+    let internal = intRec?.internalId
 
     /*
      * -------------------------
      * Create canonical entity
      * -------------------------
      */
-
     if (!internal) {
 
       const formattedName =
@@ -169,13 +175,32 @@ export async function syncEntityBatches({
       }
         
 
-      internal = await payload.create({
+      let result = await payload.create({
         collection,
         data,
       })
+      internal = String(result.id)
+     
+         const internalRec = {
+        internalId:String(result.id),
+        identityKey:result.identityKey
+      }
 
-      keyMap.set(identityKey, internal)
+      entityMap.set(adapted.externalId, internalRec)
     }
+
+    /*
+for (const doc of res.docs) {
+      if (doc.externalId && doc.internalId) {
+         const internalRec = {
+        internalId:String(doc.internalId),
+        identityKey:doc.identityKey
+      }
+        entityMap.set(String(doc.externalId), internalRec)
+      }
+    }
+
+    */
 
     /*
      * -------------------------
@@ -190,14 +215,14 @@ export async function syncEntityBatches({
         entityType,
         identityKey,
         externalId: String(adapted.externalId),
-        internalId: String(internal.id),
+        internalId: String(internal),
         externalPayload: row || {},
         confidenceScore: 1,
       },
     })
 
     const internalRec = {
-      internalId: String(internal.id),
+      internalId: String(internal),
       identityKey,
     }
 

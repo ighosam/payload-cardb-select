@@ -24,6 +24,10 @@ export async function syncCars(payload: any) {
     await syncLegacyData(payload,'transmission')
     await syncLegacyData(payload,'powertrain')
 
+    /////////////////////////////////////////
+    //////////////////////////////////////////
+    await syncLegacyData(payload,'vehicle')
+
     //await importLegacyModels(payload)
     //await syncGearBox(payload)
     //await syncDriveTrains(payload)

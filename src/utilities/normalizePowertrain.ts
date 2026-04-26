@@ -8,6 +8,7 @@ console.warn(`Name is ${input}`)
   let suffex = input.split(':')[1]
   let lower = input.split(':')[0]
 
+  lower = lower.replace("Electro","Electric")
  //lower = input.toLowerCase().trim()
 
  

@@ -7,7 +7,6 @@ import { EntityType } from '@payloadcms/ui/shared';
 import { getName } from '../utilities/getName';
 import { getExternalId } from '../utilities/getExternalId';
 
-
 /////////////////////////////////////////////////////
 
 let entityMap: Record<string, any> = {}
@@ -118,11 +117,19 @@ for (const field of collection.config.fields){
         * ------------------------------------------------
         *   Save relational data to relationalData array
         * -----------------------------------------------
+        * 
       */
+     
+      
+
+const rel_externalId = getExternalId(row,field.name)?
+ getExternalId(row,field.name):row[`${field.name}_id`]
+     //console.warn(`get id is: ${rel_externalId} external id is: ${row[`${field.name}_id`]} `)
       relationalData.push({
          relationType: field.name,
          relationMap:entityMap[`${field.name}Map`],
-         relationId: String(row[`${field.name}_id`])
+         //relationId: String(row[`${field.name}_id`])
+           relationId: rel_externalId
       }) /* End of save */  
 
 }   /* End of map relaitional data */
@@ -165,8 +172,6 @@ for (const field of collection.config.fields){
 }
 
 }
-
-
 /////////////////////////////
 /*
  let externalId = null
@@ -183,7 +188,7 @@ for (const field of collection.config.fields){
  */   
 const name = getName(row,entityType)
 const externalId = getExternalId(row,entityType)
-
+console.warn(`name is: ${name}`)
 /////////////////////////////
     return {
     //externalId: Number(row[`${entityType}_id`]),

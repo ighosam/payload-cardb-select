@@ -14,6 +14,7 @@ import { EntityMappings } from './collections/EntityMappings';
 import { PowertrainTypes } from './collections/PowerTrainTypes';
 import {PowerTrains} from './collections/Powertrains'
 import { Transmission } from './collections/Transmission';
+//import { Vehicles } from './collections/Vehicles';
 
 export const payloadCardbSelect = ():Plugin => {
   return (incomingConfig):Config => {
@@ -34,6 +35,7 @@ export const payloadCardbSelect = ():Plugin => {
            
            // ModelYears,
             CarTrims,
+            Vehicles
             
           
          // Vehicles,

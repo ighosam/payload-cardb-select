@@ -34,6 +34,7 @@ export const EntityMappings: CollectionConfig = {
          'trim',
          'transmission',
          'vehicleConfiguration',
+         'vehicle'
       ],
     },
     {

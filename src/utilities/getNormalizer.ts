@@ -6,6 +6,7 @@ import { normalizePowertrain } from './normalizePowertrain'
 import { normalizeDrivetrain } from "./normalizeDrivetrain"
 import { normalizeTransmission } from "./normalizeTransmission"
 import { normalizeTrim } from "./normalizeTrim"
+import { normalizeVehicle } from "./normalizeVehicle"
 
 
 export const getNormalizer = (entityType:string) =>{
@@ -33,6 +34,7 @@ export const getNormalizer = (entityType:string) =>{
                return normalizeTransmission
           case 'trim':
                return normalizeTrim
-       
+          case 'vehicle':
+               return normalizeVehicle     
      }
 }

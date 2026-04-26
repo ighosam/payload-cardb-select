@@ -24,7 +24,7 @@ export const CarMakes: CollectionConfig = {
       name: 'slug',
       type: 'text',
       required: true,
-      unique: true,
+      //unique: true,
     },
   ],
 }

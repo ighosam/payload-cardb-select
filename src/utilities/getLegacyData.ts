@@ -24,6 +24,8 @@ export const getLegacyData = (entityType:string) =>{
               return carDB.getDriveTrains()
         case 'transmission':
               return carDB.getGearBox()
+        case 'vehicle':
+              return carDB.getVehicles()
     }
 
 }

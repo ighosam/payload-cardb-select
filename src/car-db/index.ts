@@ -37,7 +37,9 @@ getModels():ExternalProps[] {
 return db.prepare(`SELECT DISTINCT 
   model_id, 
   make_id,
-  body_id as bodyStyle_id, 
+  make,
+  body_id as bodyStyle_id,
+  body as bodyStyle, 
   model,
   MIN(year) AS startYear,
   MAX(year) AS endYear
@@ -48,18 +50,24 @@ return db.prepare(`SELECT DISTINCT
 .all() as ExternalProps[]
 },
 
-
 getTrims():ExternalProps[] {
 return db.prepare(`SELECT DISTINCT 
   trim_id, 
-  model_id, 
+  model_id,
+  model,
+  make,
+  year,
+  generation, 
   body_id as bodyStyle_id,
-  drive_id as drivetrain_id, 
+  body as bodyStyle,
+  drive_id as drivetrain_id,
+  drive as drivetrain, 
   MIN(year) AS startYear,
   MAX(year) AS endYear,
   trim
   FROM cardb
-   GROUP BY model_id,trim_id,body_id,drive_id,drive,trim
+   GROUP BY 
+   trim
   `)
 .all()as ExternalProps[]
 },
@@ -76,7 +84,23 @@ getYears():ExternalProps[] {
 },
 getVehicles():ExternalProps[]{
   return db
-  .prepare('SELECT DISTINCT model_id,year,trim_id,trim,engine_type,drive,gearbox FROM cardb')
+  .prepare(`SELECT DISTINCT
+    make,
+    model,
+    trim,
+    generation,
+    engine_power AS power,
+     engine_volume AS engineDisplacement,
+    model_id,
+    trim_id,
+    make_id,
+    drive_id AS drivetrain_id,
+    drive as drivetrain,
+    gearbox_id As transmission_id,
+    gearbox as transmission,
+    generation,
+    year
+    FROM cardb`)
   .all()as ExternalProps[]
 },
 
@@ -116,7 +140,8 @@ getPowerTrains():ExternalProps[]{
   .prepare(`SELECT DISTINCT 
     engine_type AS powertrain,
     engine_power AS power, 
-    engine_type_id AS powertrainType_id, 
+    engine_type_id AS powertrainType_id,
+    engine_type as powertrainType, 
     engine_volume AS engineDisplacement
     FROM cardb`).all() as ExternalProps[]
 },
@@ -127,5 +152,6 @@ getPowerTrainTypes():ExternalProps[]{
     engine_type_id AS powertrainType_id
     FROM cardb`).all() as ExternalProps[]
 }
+
 
 }

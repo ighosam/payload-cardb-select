@@ -1,4 +1,6 @@
+import { getName } from "./getName"
 export const getExternalId = (row:any,entityType:string) =>{
+const name = getName(row,entityType)
 
             switch(entityType){
               case 'make':
@@ -6,13 +8,15 @@ export const getExternalId = (row:any,entityType:string) =>{
               case 'bodyStyle':
               case 'powertrainType':
               case 'transmission':
-              case 'trim':
               case 'drivetrain':
-                return row[`${entityType}_id`]
+                //return row[`${entityType}_id`]
+                return Buffer.from(`${name}`).toString("base64")
+                 case 'trim':
+                  return row[`${entityType}_id`]
               case 'powertrain':
                 return `${row[entityType]}-${row['power']}:${row['engineDisplacement']}`
               case 'vehicle':
-                return ''
+                return `${row['make']}-${row['model']}-${row['trim']}`
                 
             }
 

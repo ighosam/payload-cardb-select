@@ -1,103 +1,93 @@
-import { CollectionConfig } from 'payload';
+import { CollectionConfig, Validate } from 'payload';
 
-export const Vehicles: CollectionConfig = {
+export const Vehicles:CollectionConfig = {
   slug: 'vehicles',
-  admin: {
-    useAsTitle: 'title',
+    admin: {
+     useAsTitle: 'name',
+    //hidden:true
   },
-  access: {
-    read: () => true,
-  },
+  
   fields: [
+       /**
+     * ─────────────────────────────────────
+     * UI ONLY — MAKE
+     * not stored in DB
+     * ─────────────────────────────────────
+     */
     {
-      name: 'externalID',
+      name: 'name',
+      type: 'text',
+      required: true,
+     },
+      {
+      name: 'identityKey',
+      type: 'text',
+      unique: true,
+    },
+      {
+      name: 'slug',
       type: 'text',
       required: true,
       unique: true,
       index: true,
-      admin: { readOnly: true },
     },
 
     {
-      name: 'modelYear',
+      name: 'make',
       type: 'relationship',
-      relationTo: 'model-years',
-      required: true,
-      index: true,
-    },
+      relationTo: 'car-makes',
+      required: false,
 
+      admin: {
+        description: 'Used only for filtering — not saved',
+      },
+     
+    },
+    
+       /**
+     * ─────────────────────────────────────
+     * UI ONLY — MODEL
+     * not stored in DB
+     * ─────────────────────────────────────
+     */
+    {
+      name: 'model',
+      type: 'relationship',
+      relationTo: 'car-models',
+      required: false,  
+       admin: {
+         description: 'Used only for filtering — not saved',
+      },
+  
+    },
+  
+     /**
+     * ─────────────────────────────────────
+     * STORED — TRIM
+     * optional
+     * ─────────────────────────────────────
+     */
+
+{
+  name: 'drivetrain',
+  type: 'relationship',
+  relationTo: 'drive-trains'
+},
     {
       name: 'trim',
       type: 'relationship',
-      relationTo: 'trims',
-      required: false,
-      index: true,
+      relationTo: 'car-trims',
+      required: true,   
+       admin: {
+        description: 'Optional — not all vehicles have trims',
+      },     
     },
 
     {
-      name: 'fuelType',
-      type: 'select',
-      required: true,
-      index: true,
-      options: [
-        { label: 'Gasoline', value: 'gas' },
-        { label: 'Diesel', value: 'diesel' },
-        { label: 'Hybrid', value: 'hybrid' },
-        { label: 'Plug-in Hybrid', value: 'phev' },
-        { label: 'Electric', value: 'electric' },
-      ],
+     name: 'transmission',
+     type: 'relationship',
+     relationTo:'transmissions'
     },
-
-    {
-      name: 'drivetrain',
-      type: 'select',
-      index: true,
-      options: [
-        { label: 'FWD', value: 'fwd' },
-        { label: 'RWD', value: 'rwd' },
-        { label: 'AWD', value: 'awd' },
-        { label: '4WD', value: '4wd' },
-      ],
-    },
-
-    {
-      name: 'transmission',
-      type: 'select',
-      index: true,
-      options: [
-        { label: 'Automatic', value: 'automatic' },
-        { label: 'Manual', value: 'manual' },
-        { label: 'CVT', value: 'cvt' },
-      ],
-    },
-
-    {
-      name: 'title',
-      type: 'text',
-      admin: { readOnly: true },
-      hooks: {
-        beforeValidate: [
-          async ({ data, req }) => {
-            if (!data?.modelYear) return data;
-
-            const modelYear = await req.payload.findByID({
-              collection: 'model-years',
-              id: data.modelYear,
-            });
-
-            const parts = [
-              modelYear.model?.name,
-              modelYear.year,
-              data.trim?.name,
-              data.fuelType?.toUpperCase(),
-              data.drivetrain?.toUpperCase(),
-            ].filter(Boolean);
-
-            data.title = parts.join(' ');
-            return data;
-          },
-        ],
-      },
-    },
+     
   ],
 };

@@ -33,7 +33,7 @@ const CANONICAL_MAP: Record<string, string> = {
 
 export function normalizeBodyStyleName(input: string): string {
   if (!input) return ''
-
+  
   const lower = input.toLowerCase().trim()
 
   // Try direct match
@@ -49,5 +49,6 @@ export function normalizeBodyStyleName(input: string): string {
   }
 
   // Fallback: capitalize first letter
-  return lower.charAt(0).toUpperCase() + lower.slice(1)
+  //return lower.charAt(0).toUpperCase() + lower.slice(1)
+  return ''
 }

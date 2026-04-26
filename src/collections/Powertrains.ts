@@ -40,7 +40,10 @@ export const PowerTrains: CollectionConfig =
       hooks:{
         beforeChange:[
           ({data})=>{
-            
+            if((data?.name).includes('Electro')){
+              return 'kwt'
+            }
+            return 'hp'
           }
         ]
       }
@@ -49,8 +52,21 @@ export const PowerTrains: CollectionConfig =
     // 🔹 Canonical (ALWAYS SAME UNIT)
     {
       name: 'totalPowerHp',
-      type: 'number',
+      type: 'text',
       //required: true,
+      hooks:{
+        beforeChange:[
+          ({data})=>{
+           if((data?.name).includes('Electro')){
+            
+            return data?.power > 0 ? 
+           `${data?.power}kwt`: String(data?.power)
+           }
+            return data?.power > 0 ?
+            `${data?.power}hp`: String(data?.power)
+          }
+        ]
+      }
     },
 
     // Optional (nice to have)

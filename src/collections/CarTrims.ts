@@ -3,7 +3,7 @@ import { CollectionConfig } from 'payload';
 export const CarTrims: CollectionConfig = {
   slug: 'car-trims',
       admin:{
-        useAsTitle: 'name',
+        useAsTitle: 'title',
         //hidden:true
       },
   fields: [
@@ -11,6 +11,18 @@ export const CarTrims: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'title',
+      type: 'text',
+      required:true,
+      hooks:{
+        beforeChange:[
+          ({data})=>{
+            return (data?.name).split('_')[0]
+          }
+        ]
+      }
     },
     {
       name: 'identityKey',

@@ -30,6 +30,8 @@ export const getCollectionSlug = (entityType:string) =>{
             return 'drive-trains'
         case 'transmission':
             return 'transmissions'
+        case 'vehicle':
+            return 'vehicles'
             ///////////////////////
         
     }

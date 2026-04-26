@@ -1,18 +1,27 @@
+import { getNormalizer } from "./getNormalizer";
 export const getName = (row:any,entityType:string) =>{
 
-            switch(entityType){
+  const stringToHex = (str: string): string => {
+  return Array.from(str)
+    .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+    .join('');
+}
+    const nomalizer = getNormalizer(entityType) as (name:string)=> string
+            
+    switch(entityType){
               case 'make':
               case 'model':
               case 'bodyStyle':
               case 'powertrainType':
               case 'transmission':
-              case 'trim':
               case 'drivetrain':
-                return row[entityType]
+                return nomalizer(row[entityType])
+              case 'trim':
+                const name = `${nomalizer(row[entityType])}_${Buffer.from(`${row[entityType]}`).toString("base64")}`
+                return name
               case 'powertrain':
-                return `${row[entityType]}:${row['power']}`
+                return nomalizer(`${row[entityType]}:${row['power']}_${row['engineDisplacement']}`)
               case 'vehicle':
-                return ''
+                return nomalizer(`${row['trim']}_${row['make']}_${row['model']}_${row['generation']}:${row['year']}`)
             }
-
 }
