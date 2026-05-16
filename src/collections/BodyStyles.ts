@@ -3,7 +3,10 @@ import { CollectionConfig } from 'payload';
 
 export const BodyStyles: CollectionConfig = {
   slug: 'body-styles',
-  admin: { useAsTitle: 'name' },
+  admin: { 
+    useAsTitle: 'name',
+    hidden:true,
+   },
   access: { read: () => true },
   fields: [
     {

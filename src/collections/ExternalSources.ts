@@ -5,6 +5,7 @@ export const ExternalSources: CollectionConfig = {
   slug: 'external-sources',
   admin: {
     useAsTitle: 'name',
+    hidden:true,
   },
   fields: [
     {

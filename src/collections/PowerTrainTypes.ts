@@ -5,7 +5,7 @@ export const PowertrainTypes: CollectionConfig =
   slug: 'powertrainTypes',
    admin: {
     useAsTitle: 'name',
-    //hidden:true
+    hidden:true,
   },
   fields: [
 

@@ -4,6 +4,7 @@ export const CarModels: CollectionConfig = {
   slug: 'car-models',
   admin: {
     useAsTitle: 'name',
+    hidden:true
   },
   fields: [
     {
@@ -20,6 +21,7 @@ export const CarModels: CollectionConfig = {
       relationTo: 'car-makes',
      // required: true,
       //index: true,
+      
     },
 
     {

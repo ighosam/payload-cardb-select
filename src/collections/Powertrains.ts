@@ -3,6 +3,9 @@ import { CollectionConfig } from 'payload';
 export const PowerTrains: CollectionConfig =
 {
   slug: 'powertrains',
+     admin: {
+    hidden:true,
+  },
   fields: [
     
      {

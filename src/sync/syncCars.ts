@@ -5,6 +5,7 @@
 import { ensureLegacySource } from './ensureLegacySource';
 import { syncLegacyData } from '../importer/syncLegacyData';
 import { PowerTrains } from '../collections/Powertrains';
+import { seedYears } from '../utilities/seedYears';
 
 
 
@@ -27,6 +28,9 @@ export async function syncCars(payload: any) {
     /////////////////////////////////////////
     //////////////////////////////////////////
     await syncLegacyData(payload,'vehicle')
+    //await syncLegacyData(payload,'yearTrim')
+
+    await seedYears(payload,'car-years')
 
     //await importLegacyModels(payload)
     //await syncGearBox(payload)

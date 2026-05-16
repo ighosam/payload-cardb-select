@@ -151,6 +151,19 @@ getPowerTrainTypes():ExternalProps[]{
     engine_type AS powertrainType, 
     engine_type_id AS powertrainType_id
     FROM cardb`).all() as ExternalProps[]
+},
+getYearTrim():ExternalProps[]{
+  return db
+  .prepare(`SELECT DISTINCT 
+    make,
+    make_id,
+    model,
+    model_id,
+    trim,
+    trim_id,
+    year
+    FROM cardb
+    Group by year`).all() as ExternalProps[]
 }
 
 

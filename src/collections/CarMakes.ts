@@ -5,7 +5,7 @@ export const CarMakes: CollectionConfig = {
 
   admin: {
     useAsTitle: 'name',
-    //hidden:true
+    hidden:true,
   },
 
   fields: [

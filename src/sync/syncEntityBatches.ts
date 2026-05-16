@@ -52,6 +52,8 @@ export async function syncEntityBatches({
     const adapted = await adapter(row, payload, entityType)
    // console.warn(`${row.startYear}`)
 
+   //if(!adapted.enternalId) continue
+
     if (entityMap.has(String(adapted.externalId))) continue
 ///////////////
     //console.warn(adapted.relationalData.entityValue)
@@ -71,7 +73,7 @@ export async function syncEntityBatches({
 
       for (const rel of adapted.relationalData) {
 
-        if (!rel.relationId) {
+        if (!rel.relationId ) {
           skipped = true
           break
         }
@@ -126,6 +128,8 @@ export async function syncEntityBatches({
 
     //let normalized = nomalizer(adapted.name)
        let normalized = adapted.name
+
+       if(!normalized) continue
    
 /*
     if(entityType === 'trim'){
@@ -160,6 +164,8 @@ export async function syncEntityBatches({
      * Create canonical entity
      * -------------------------
      */
+   
+
     if (!internal) {
 
       const formattedName =
@@ -173,7 +179,7 @@ export async function syncEntityBatches({
         slug,
         ...relData
       }
-        
+  
 
       let result = await payload.create({
         collection,

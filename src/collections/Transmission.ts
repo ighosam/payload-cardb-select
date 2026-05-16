@@ -4,7 +4,7 @@ export const Transmission: CollectionConfig = {
   slug: 'transmissions',
   admin: {
     useAsTitle: 'name',
-    //hidden: true,
+    hidden: true,
   },
   fields: [  
     {

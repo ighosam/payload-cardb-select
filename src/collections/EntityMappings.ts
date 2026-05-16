@@ -3,7 +3,10 @@ import type { CollectionConfig } from 'payload'
 
 export const EntityMappings: CollectionConfig = {
   slug: 'entity-mappings',
-  admin: { useAsTitle: 'externalId' },
+  admin: { 
+    useAsTitle: 'externalId',
+    hidden:true,
+   },
   indexes: [
     {
       fields: ['source', 'entityType', 'externalId'],
@@ -26,7 +29,7 @@ export const EntityMappings: CollectionConfig = {
          'model',
          'generation',
          'bodyStyle',
-         'modelYear',
+         'yearTrim',
          'engine',
          'powertrain',
          'powertrainType',
@@ -34,7 +37,8 @@ export const EntityMappings: CollectionConfig = {
          'trim',
          'transmission',
          'vehicleConfiguration',
-         'vehicle'
+         'vehicle',
+         'listing'
       ],
     },
     {

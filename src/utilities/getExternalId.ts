@@ -17,6 +17,8 @@ const name = getName(row,entityType)
                 return `${row[entityType]}-${row['power']}:${row['engineDisplacement']}`
               case 'vehicle':
                 return `${row['make']}-${row['model']}-${row['trim']}`
+              case 'yearTrim':
+                return `${row['make']}_${row['year']}-${row['model']}-${row['trim']}`
                 
             }
 

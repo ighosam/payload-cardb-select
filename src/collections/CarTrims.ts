@@ -3,8 +3,8 @@ import { CollectionConfig } from 'payload';
 export const CarTrims: CollectionConfig = {
   slug: 'car-trims',
       admin:{
-        useAsTitle: 'title',
-        //hidden:true
+        useAsTitle: 'name',
+        hidden:true,
       },
   fields: [
      {

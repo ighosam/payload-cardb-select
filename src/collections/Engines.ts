@@ -4,6 +4,7 @@ export const Engines: CollectionConfig = {
   slug: 'engine-types',
   admin: {
     useAsTitle: 'title',
+    hidden:true,
     defaultColumns: [
       'title',
       'fuelType',

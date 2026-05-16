@@ -5,7 +5,7 @@ export const DriveTrains: CollectionConfig = {
   slug: 'drive-trains',
   admin: {
     useAsTitle: 'name',
-    //hidden: true,
+    hidden: true,
   },
   fields: [
     

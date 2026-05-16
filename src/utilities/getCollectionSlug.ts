@@ -32,6 +32,8 @@ export const getCollectionSlug = (entityType:string) =>{
             return 'transmissions'
         case 'vehicle':
             return 'vehicles'
+        case 'yearTrim':
+            return 'year-trims'
             ///////////////////////
         
     }

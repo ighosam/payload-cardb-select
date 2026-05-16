@@ -48,7 +48,7 @@ let sourceId = ''
 
 for (const field of collection.config.fields){
  
-  if('name' in field)
+  //if('name' in field)
 
        /*
           * ------------------------------------------------------
@@ -70,8 +70,8 @@ for (const field of collection.config.fields){
       || field.name === 'name'
     ) continue
      */
-  const hasMake = entities.some(doc => doc === field.name)
-            if (hasMake) continue
+  const hasEntry = entities.some(doc => doc === field.name)
+            if (hasEntry) continue
       /*
         * -----------------------------------
         *   Map relational data for adapter
@@ -105,7 +105,11 @@ for (const field of collection.config.fields){
      if(!entityMap.hasOwnProperty(`${field.name}Map`)){
     
       let relMap = await loadEntity(payload, field.name, String(sourceId))
-      if(relMap.size === 0) relMap = await syncLegacyData(payload,field.name)
+
+      if(relMap.size === 0){
+      await syncLegacyData(payload,field.name)
+      relMap = await loadEntity(payload, field.name, String(sourceId))
+      } 
       
          entityMap = {
       ...entityMap,
@@ -124,6 +128,11 @@ for (const field of collection.config.fields){
 
 const rel_externalId = getExternalId(row,field.name)?
  getExternalId(row,field.name):row[`${field.name}_id`]
+ /*
+ check if rel_externalId exist in the Map, it not 
+ continue else add the data to relationalData
+
+ */
      //console.warn(`get id is: ${rel_externalId} external id is: ${row[`${field.name}_id`]} `)
       relationalData.push({
          relationType: field.name,

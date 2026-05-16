@@ -23,5 +23,8 @@ export const getName = (row:any,entityType:string) =>{
                 return nomalizer(`${row[entityType]}:${row['power']}_${row['engineDisplacement']}`)
               case 'vehicle':
                 return nomalizer(`${row['trim']}_${row['make']}_${row['model']}_${row['generation']}:${row['year']}`)
+               case 'yearTrim':
+                return nomalizer(`${row['year']}`)
+             
             }
 }
